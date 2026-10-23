@@ -581,6 +581,10 @@ numeroDigitado.length!==2
 return;
 }
 
+ document.getElementById(
+    "somConfirma"
+  ).play();
+ 
 await addDoc(
 collection(db,"votos"),
 {
@@ -775,6 +779,10 @@ document.getElementById(
 criarTeclado();
 
 </script>
-
+ 
+<audio id="somConfirma">
+  <source src="urna.mp3" type="audio/mpeg">
+</audio>
+ 
 </body>
 </html>
