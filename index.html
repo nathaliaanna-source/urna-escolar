@@ -143,6 +143,7 @@ addDoc,
 doc,
 setDoc,
 updateDoc,
+deleteDoc,
 getDocs,
 onSnapshot
 }
@@ -181,48 +182,68 @@ event.target.classList.add("active");
 
 window.cadastrarCandidato = async function(){
 
-const nome =
-document.getElementById("nome").value;
+  const nome =
+  document.getElementById("nome").value;
 
-const numero =
-document.getElementById("numeroCand").value;
+  const numero =
+  document.getElementById("numeroCand").value;
 
-if(!nome || numero.length!==2){
-alert("Informe nome e número.");
-return;
+  if(!nome || numero.length!==2){
+    alert("Informe nome e número.");
+    return;
+  }
+
+  await addDoc(
+    collection(db,"candidatos"),
+    {
+      nome,
+      numero
+    }
+  );
+
+  document.getElementById("nome").value="";
+  document.getElementById("numeroCand").value="";
 }
 
-await addDoc(
-collection(db,"candidatos"),
-{
-nome,
-numero
-}
-);
+window.excluirCandidato =
+async function(id){
 
-document.getElementById("nome").value="";
-document.getElementById("numeroCand").value="";
+  if(statusAtual !== "idle"){
+    alert(
+      "Não é possível excluir candidatos após o início da eleição."
+    );
+    return;
+  }
+
+  if(!confirm("Excluir candidato?")){
+    return;
+  }
+
+  await deleteDoc(
+    doc(db,"candidatos",id)
+  );
+
 }
 
 window.liberarVoto = async function(){
 
-await setDoc(
-doc(db,"controle","estado"),
-{
-status:"ready"
-}
-);
+  await setDoc(
+    doc(db,"controle","estado"),
+    {
+      status:"ready"
+    }
+  );
 
 }
 
 window.encerrarEleicao = async function(){
 
-await setDoc(
-doc(db,"controle","estado"),
-{
-status:"closed"
-}
-);
+  await setDoc(
+    doc(db,"controle","estado"),
+    {
+      status:"closed"
+    }
+  );
 
 }
 
@@ -377,8 +398,14 @@ const c=docSnap.data();
 
 candidatos.push(c);
 
-div.innerHTML +=
-`<div>${c.numero} - ${c.nome}</div>`;
+div.innerHTML += `
+<div>
+  ${c.numero} - ${c.nome}
+  <button onclick="excluirCandidato('${docSnap.id}')">
+    Excluir
+  </button>
+</div>
+`;
 
 });
 
