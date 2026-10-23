@@ -180,29 +180,43 @@ Nova eleição
 
 <div id="urna" class="section">
 
-<h2>Urna</h2>
+<div id="urnaContainer">
 
-<div id="status">
-Aguardando liberação...
+  <div id="tela">
+
+    <h2>Urna</h2>
+
+    <div id="status">
+      Aguardando liberação...
+    </div>
+
+    <div id="numero">--</div>
+
+    <div id="candidato"></div>
+
+  </div>
+
+  <div>
+
+    <div id="teclado"></div>
+
+    <br>
+
+    <button onclick="corrige()">
+      CORRIGE
+    </button>
+
+    <button onclick="branco()">
+      BRANCO
+    </button>
+
+    <button onclick="confirma()">
+      CONFIRMA
+    </button>
+
+  </div>
+
 </div>
-
-<div id="numero">--</div>
-
-<div id="candidato"></div>
-
-<div id="teclado"></div>
-
-<button onclick="corrige()">
-CORRIGE
-</button>
-
-<button onclick="branco()">
-BRANCO
-</button>
-
-<button onclick="confirma()">
-CONFIRMA
-</button>
 
 </div>
 
