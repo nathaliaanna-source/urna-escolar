@@ -99,7 +99,6 @@ Encerrar eleição
 <button onclick="novaEleicao()">
 Nova eleição
 </button>
- window.novaEleicao = async function(){
 
   if(
     !confirm(
@@ -264,6 +263,28 @@ window.encerrarEleicao = async function(){
 
   alert(
     "Eleição encerrada. Resultado disponível abaixo."
+  );
+
+}
+ window.novaEleicao = async function(){
+
+  if(
+    !confirm(
+      "Apagar todos os votos e reiniciar a eleição?"
+    )
+  ){
+    return;
+  }
+
+  await setDoc(
+    doc(db,"controle","estado"),
+    {
+      status:"idle"
+    }
+  );
+
+  alert(
+    "Eleição reiniciada."
   );
 
 }
