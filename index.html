@@ -447,11 +447,7 @@ const dados=snap.data();
 if(!dados) return;
 
 statusAtual=dados.status;
-if(statusAtual !== "closed"){
-  document.getElementById(
-    "resultado"
-  ).innerHTML = "";
-}
+
 document.getElementById(
 "status"
 ).textContent=
