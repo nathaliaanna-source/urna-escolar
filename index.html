@@ -96,7 +96,31 @@ Liberar eleitor
 <button onclick="encerrarEleicao()">
 Encerrar eleição
 </button>
+<button onclick="novaEleicao()">
+Nova eleição
+</button>
+ window.novaEleicao = async function(){
 
+  if(
+    !confirm(
+      "Apagar todos os votos e reiniciar a eleição?"
+    )
+  ){
+    return;
+  }
+
+  await setDoc(
+    doc(db,"controle","estado"),
+    {
+      status:"idle"
+    }
+  );
+
+  alert(
+    "Status reiniciado. Apague os votos no Firebase ou implemente limpeza automática."
+  );
+
+}
 <h2>Resultado</h2>
 
 <div id="resultado"></div>
@@ -231,6 +255,18 @@ window.liberarVoto = async function(){
 
 window.encerrarEleicao = async function(){
 
+  await setDoc(
+    doc(db,"controle","estado"),
+    {
+      status:"closed"
+    }
+  );
+
+  alert(
+    "Eleição encerrada. Resultado disponível abaixo."
+  );
+
+}
   await setDoc(
     doc(db,"controle","estado"),
     {
@@ -445,19 +481,73 @@ contagem[voto]=
 
 let html="";
 
-for(const k in contagem){
+const total =
+Object.values(contagem)
+.reduce((a,b)=>a+b,0);
 
-html+=`
-<div>
-${k}: ${contagem[k]} voto(s)
-</div>
-`;
+let vencedor = "";
+let max = 0;
+
+for(const numero in contagem){
+
+  if(contagem[numero] > max){
+    max = contagem[numero];
+    vencedor = numero;
+  }
 
 }
 
+html += `
+<h3>🏆 RESULTADO FINAL</h3>
+<hr>
+`;
+
+for(const k in contagem){
+
+  const candidato =
+  candidatos.find(
+    c => c.numero === k
+  );
+
+  const nome =
+  candidato
+    ? candidato.nome
+    : (k === "BRANCO"
+      ? "Brancos"
+      : k);
+
+  const percentual =
+  (
+    contagem[k] * 100 / total
+  ).toFixed(1);
+
+  const trofeu =
+  k === vencedor
+    ? " 🏆"
+    : "";
+
+  html += `
+  <div style="margin-bottom:12px">
+    <strong>
+      ${nome}${trofeu}
+    </strong>
+    <br>
+    ${contagem[k]} voto(s)
+    (${percentual}%)
+  </div>
+  `;
+}
+
+html += `
+<hr>
+<strong>
+Total de votos: ${total}
+</strong>
+`;
+
 document.getElementById(
 "resultado"
-).innerHTML=html;
+).innerHTML = html;
 
 }
 );
