@@ -246,14 +246,27 @@ window.encerrarEleicao = async function(){
   );
 
 }
- window.novaEleicao = async function(){
+window.novaEleicao = async function(){
 
   if(
     !confirm(
-      "Apagar todos os votos e reiniciar a eleição?"
+      "Apagar todos os votos e iniciar uma nova eleição?"
     )
   ){
     return;
+  }
+
+  const votos =
+    await getDocs(
+      collection(db,"votos")
+    );
+
+  for(const voto of votos.docs){
+
+    await deleteDoc(
+      voto.ref
+    );
+
   }
 
   await setDoc(
@@ -264,12 +277,12 @@ window.encerrarEleicao = async function(){
   );
 
   document.getElementById(
-  "resultado"
-).innerHTML = "";
+    "resultado"
+  ).innerHTML = "";
 
-alert(
-  "Eleição reiniciada."
-);
+  alert(
+    "Nova eleição iniciada."
+  );
 
 }
 
