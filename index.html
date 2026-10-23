@@ -263,9 +263,13 @@ window.encerrarEleicao = async function(){
     }
   );
 
-  alert(
-    "Eleição reiniciada."
-  );
+  document.getElementById(
+  "resultado"
+).innerHTML = "";
+
+alert(
+  "Eleição reiniciada."
+);
 
 }
 
@@ -471,7 +475,14 @@ contagem[voto]=
 (contagem[voto]||0)+1;
 
 });
+if(statusAtual !== "closed"){
 
+  document.getElementById(
+    "resultado"
+  ).innerHTML = "";
+
+  return;
+}
 let html="";
 
 const total =
