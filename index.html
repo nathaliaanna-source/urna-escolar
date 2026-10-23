@@ -188,6 +188,32 @@ let votoBranco=false;
 let statusAtual="idle";
 let candidatos=[];
 
+ const SENHA_MESARIO = "rener";
+
+window.entrarMesario = function(){
+
+  const senha =
+  document.getElementById(
+    "senhaMesario"
+  ).value;
+
+  if(senha !== SENHA_MESARIO){
+
+    alert("Senha incorreta.");
+
+    return;
+  }
+
+  document.getElementById(
+    "loginMesario"
+  ).style.display = "none";
+
+  document.getElementById(
+    "painelMesario"
+  ).style.display = "block";
+
+}
+
 window.abrirAba = function(nome){
 
 document.querySelectorAll(".section")
