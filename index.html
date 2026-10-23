@@ -208,12 +208,15 @@ window.cadastrarCandidato = async function(){
 window.excluirCandidato =
 async function(id){
 
-  if(statusAtual !== "idle"){
-    alert(
-      "Não é possível excluir candidatos após o início da eleição."
-    );
+  if(!confirm("Excluir candidato?")){
     return;
   }
+
+  await deleteDoc(
+    doc(db,"candidatos",id)
+  );
+
+}
 
   if(!confirm("Excluir candidato?")){
     return;
