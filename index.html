@@ -2,14 +2,449 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Urna Escolar</title>
+
+<style>
+body{
+ font-family:Arial,sans-serif;
+ margin:20px;
+ background:#f5f5f5;
+}
+
+.tab{
+ padding:10px 20px;
+ cursor:pointer;
+ border:none;
+ margin-right:10px;
+}
+
+.active{
+ background:#2e7d32;
+ color:white;
+}
+
+.section{
+ display:none;
+ margin-top:20px;
+}
+
+.section.active{
+ display:block;
+}
+
+button{
+ padding:10px;
+ margin:4px;
+ cursor:pointer;
+}
+
+input{
+ padding:8px;
+ margin:4px;
+}
+
+#teclado button{
+ width:60px;
+ height:60px;
+ font-size:20px;
+}
+
+#numero{
+ font-size:40px;
+ margin:20px 0;
+}
+</style>
 </head>
 <body>
 
 <h1>Urna Escolar</h1>
 
-<p>O site foi publicado com sucesso!</p>
+<button class="tab active" onclick="abrirAba('mesario')">
+Mesário
+</button>
+
+<button class="tab" onclick="abrirAba('urna')">
+Urna
+</button>
+
+<div id="mesario" class="section active">
+
+<h2>Cadastrar candidato</h2>
+
+<input id="nome" placeholder="Nome">
+
+<input id="numeroCand"
+maxlength="2"
+placeholder="Número">
+
+<button onclick="cadastrarCandidato()">
+Adicionar
+</button>
+
+<hr>
+
+<h2>Candidatos</h2>
+<div id="listaCandidatos"></div>
+
+<hr>
+
+<button onclick="liberarVoto()">
+Liberar eleitor
+</button>
+
+<button onclick="encerrarEleicao()">
+Encerrar eleição
+</button>
+
+<h2>Resultado</h2>
+
+<div id="resultado"></div>
+
+</div>
+
+<div id="urna" class="section">
+
+<h2>Urna</h2>
+
+<div id="status">
+Aguardando liberação...
+</div>
+
+<div id="numero">--</div>
+
+<div id="candidato"></div>
+
+<div id="teclado"></div>
+
+<button onclick="corrige()">
+CORRIGE
+</button>
+
+<button onclick="branco()">
+BRANCO
+</button>
+
+<button onclick="confirma()">
+CONFIRMA
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+doc,
+setDoc,
+updateDoc,
+getDocs,
+onSnapshot
+}
+from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyByG67GkhFc0GU0sPjIBvM7sSH2ullBucQ",
+authDomain: "urna-escolar-rener.firebaseapp.com",
+projectId: "urna-escolar-rener",
+storageBucket: "urna-escolar-rener.firebasestorage.app",
+messagingSenderId: "346784616263",
+appId: "1:346784616263:web:e2fc42d94a843c19aa0662"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let numeroDigitado="";
+let votoBranco=false;
+let statusAtual="idle";
+let candidatos=[];
+
+window.abrirAba = function(nome){
+
+document.querySelectorAll(".section")
+.forEach(el=>el.classList.remove("active"));
+
+document.querySelectorAll(".tab")
+.forEach(el=>el.classList.remove("active"));
+
+document.getElementById(nome)
+.classList.add("active");
+
+event.target.classList.add("active");
+}
+
+window.cadastrarCandidato = async function(){
+
+const nome =
+document.getElementById("nome").value;
+
+const numero =
+document.getElementById("numeroCand").value;
+
+if(!nome || numero.length!==2){
+alert("Informe nome e número.");
+return;
+}
+
+await addDoc(
+collection(db,"candidatos"),
+{
+nome,
+numero
+}
+);
+
+document.getElementById("nome").value="";
+document.getElementById("numeroCand").value="";
+}
+
+window.liberarVoto = async function(){
+
+await setDoc(
+doc(db,"controle","estado"),
+{
+status:"ready"
+}
+);
+
+}
+
+window.encerrarEleicao = async function(){
+
+await setDoc(
+doc(db,"controle","estado"),
+{
+status:"closed"
+}
+);
+
+}
+
+function atualizarUrna(){
+
+document.getElementById("numero")
+.textContent =
+numeroDigitado || "--";
+
+const candidato =
+candidatos.find(
+c=>c.numero===numeroDigitado
+);
+
+document.getElementById("candidato")
+.textContent =
+candidato
+? candidato.nome
+: (
+numeroDigitado.length===2
+? "Voto nulo"
+: ""
+);
+
+}
+
+function criarTeclado(){
+
+const teclado =
+document.getElementById("teclado");
+
+for(let i=1;i<=9;i++){
+
+const btn=document.createElement("button");
+
+btn.textContent=i;
+
+btn.onclick=()=>{
+
+if(statusAtual!=="ready") return;
+
+if(numeroDigitado.length<2){
+
+numeroDigitado+=i;
+
+atualizarUrna();
+
+}
+
+};
+
+teclado.appendChild(btn);
+
+}
+
+const zero=document.createElement("button");
+
+zero.textContent="0";
+
+zero.onclick=()=>{
+
+if(statusAtual!=="ready") return;
+
+if(numeroDigitado.length<2){
+
+numeroDigitado+="0";
+
+atualizarUrna();
+
+}
+
+};
+
+teclado.appendChild(zero);
+
+}
+
+window.corrige = function(){
+
+numeroDigitado="";
+votoBranco=false;
+
+atualizarUrna();
+}
+
+window.branco = function(){
+
+if(statusAtual!=="ready")
+return;
+
+votoBranco=true;
+
+numeroDigitado="";
+
+document.getElementById(
+"candidato"
+).textContent="Voto em branco";
+}
+
+window.confirma = async function(){
+
+if(statusAtual!=="ready")
+return;
+
+if(
+!votoBranco &&
+numeroDigitado.length!==2
+){
+return;
+}
+
+await addDoc(
+collection(db,"votos"),
+{
+numero:
+votoBranco
+? "BRANCO"
+: numeroDigitado,
+data:new Date().toISOString()
+}
+);
+
+await updateDoc(
+doc(db,"controle","estado"),
+{
+status:"idle"
+}
+);
+
+numeroDigitado="";
+votoBranco=false;
+
+atualizarUrna();
+}
+
+onSnapshot(
+collection(db,"candidatos"),
+snapshot=>{
+
+candidatos=[];
+
+const div =
+document.getElementById(
+"listaCandidatos"
+);
+
+div.innerHTML="";
+
+snapshot.forEach(docSnap=>{
+
+const c=docSnap.data();
+
+candidatos.push(c);
+
+div.innerHTML +=
+`<div>${c.numero} - ${c.nome}</div>`;
+
+});
+
+}
+);
+
+onSnapshot(
+doc(db,"controle","estado"),
+snap=>{
+
+const dados=snap.data();
+
+if(!dados) return;
+
+statusAtual=dados.status;
+
+document.getElementById(
+"status"
+).textContent=
+statusAtual==="ready"
+? "Digite seu voto"
+: statusAtual==="closed"
+? "Eleição encerrada"
+: "Aguardando liberação";
+
+}
+);
+
+onSnapshot(
+collection(db,"votos"),
+snapshot=>{
+
+const contagem={};
+
+snapshot.forEach(doc=>{
+
+const voto=
+doc.data().numero;
+
+contagem[voto]=
+(contagem[voto]||0)+1;
+
+});
+
+let html="";
+
+for(const k in contagem){
+
+html+=`
+<div>
+${k}: ${contagem[k]} voto(s)
+</div>
+`;
+
+}
+
+document.getElementById(
+"resultado"
+).innerHTML=html;
+
+}
+);
+
+criarTeclado();
+
+</script>
 
 </body>
 </html>
