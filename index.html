@@ -366,8 +366,13 @@ document.getElementById(
 ).innerHTML =
 candidato
 ? `
-${candidato.foto}
-
+src="${candidato.foto}"
+style="
+width:120px;
+height:120px;
+object-fit:cover;
+border-radius:8px;
+">
 <br><br>
 
 ${candidato.nome}
