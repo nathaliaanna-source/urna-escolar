@@ -100,26 +100,6 @@ Encerrar eleição
 Nova eleição
 </button>
 
-  if(
-    !confirm(
-      "Apagar todos os votos e reiniciar a eleição?"
-    )
-  ){
-    return;
-  }
-
-  await setDoc(
-    doc(db,"controle","estado"),
-    {
-      status:"idle"
-    }
-  );
-
-  alert(
-    "Status reiniciado. Apague os votos no Firebase ou implemente limpeza automática."
-  );
-
-}
 <h2>Resultado</h2>
 
 <div id="resultado"></div>
