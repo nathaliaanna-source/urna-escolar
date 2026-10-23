@@ -181,6 +181,43 @@ event.target.classList.add("active");
 }
 
 window.cadastrarCandidato = async function(){
+
+  const nome =
+  document.getElementById("nome").value;
+
+  const numero =
+  document.getElementById("numeroCand").value;
+
+  if(!nome || numero.length!==2){
+    alert("Informe nome e número.");
+    return;
+  }
+
+  await addDoc(
+    collection(db,"candidatos"),
+    {
+      nome,
+      numero
+    }
+  );
+
+  document.getElementById("nome").value="";
+  document.getElementById("numeroCand").value="";
+}
+
+window.excluirCandidato =
+async function(id){
+
+  if(!confirm("Excluir candidato?")){
+    return;
+  }
+
+  await deleteDoc(
+    doc(db,"candidatos",id)
+  );
+
+}
+
 window.liberarVoto = async function(){
 
   await setDoc(
