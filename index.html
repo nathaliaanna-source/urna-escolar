@@ -72,7 +72,24 @@ Urna
 
 <h2>Cadastrar candidato</h2>
 
-<input id="nome" placeholder="Nome">
+ <div id="loginMesario">
+
+<input
+type="password"
+id="senhaMesario"
+placeholder="Senha do mesário">
+
+<button onclick="entrarMesario()">
+Entrar
+</button>
+
+</div>
+
+<div id="painelMesario" style="display:none;">
+
+<h2>Cadastrar candidato</h2>
+
+ <input id="nome" placeholder="Nome">
 
 <input id="numeroCand"
 maxlength="2"
@@ -103,6 +120,8 @@ Nova eleição
 <h2>Resultado</h2>
 
 <div id="resultado"></div>
+
+</div>
 
 </div>
 
