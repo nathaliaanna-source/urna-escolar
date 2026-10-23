@@ -536,16 +536,17 @@ for(const k in contagem){
     ? " 🏆"
     : "";
 
- html += `
+html += `
 <div style="
 padding:12px;
 margin-bottom:12px;
 border:1px solid #ccc;
 border-radius:8px;
 background:white;
+color:black;
 ">
 
-<strong style="font-size:18px;">
+<strong style="font-size:18px;color:black;">
 ${nome}${trofeu}
 </strong>
 
@@ -559,7 +560,6 @@ ${percentual}%
 
 </div>
 `;
-}
 
 html += `
 <hr>
