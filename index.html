@@ -54,6 +54,55 @@ input{
  font-size:40px;
  margin:20px 0;
 }
+#urnaContainer{
+  display:flex;
+  gap:20px;
+  background:#cfcfcf;
+  padding:20px;
+  border-radius:10px;
+}
+
+#tela{
+  flex:1;
+  background:white;
+  min-height:350px;
+  padding:20px;
+  border:3px solid #999;
+}
+
+#teclado{
+  width:320px;
+}
+
+#teclado button{
+  width:80px;
+  height:60px;
+  margin:5px;
+  font-size:24px;
+  background:#222;
+  color:white;
+}
+
+#candidato img{
+  width:180px;
+  height:220px;
+  object-fit:cover;
+  border:1px solid #000;
+}
+button[onclick="corrige()"]{
+  background:#ff6600;
+  color:white;
+}
+
+button[onclick="branco()"]{
+  background:white;
+  color:black;
+}
+
+button[onclick="confirma()"]{
+  background:#1f9d3a;
+  color:white;
+}
 </style>
 </head>
 <body>
