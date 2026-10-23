@@ -91,6 +91,10 @@ Entrar
 
  <input id="nome" placeholder="Nome">
 
+<input
+id="foto"
+placeholder="Link da foto">
+ 
 <input id="numeroCand"
 maxlength="2"
 placeholder="Número">
@@ -233,7 +237,10 @@ window.cadastrarCandidato = async function(){
   const nome =
   document.getElementById("nome").value;
 
-  const numero =
+  const foto =
+document.getElementById("foto").value;
+ 
+ const numero =
   document.getElementById("numeroCand").value;
 
   if(!nome || numero.length!==2){
@@ -254,13 +261,15 @@ if(existente){
   await addDoc(
     collection(db,"candidatos"),
     {
-      nome,
-      numero
+     nome,
+    numero,
+    foto
     }
   );
 
-  document.getElementById("nome").value="";
-  document.getElementById("numeroCand").value="";
+document.getElementById("nome").value="";
+document.getElementById("foto").value="";
+document.getElementById("numeroCand").value="";
 }
 
 window.excluirCandidato =
@@ -352,10 +361,17 @@ candidatos.find(
 c=>c.numero===numeroDigitado
 );
 
-document.getElementById("candidato")
-.textContent =
+document.getElementById(
+"candidato"
+).innerHTML =
 candidato
-? candidato.nome
+? `
+${candidato.foto}
+
+<br><br>
+
+${candidato.nome}
+`
 : (
 numeroDigitado.length===2
 ? "Voto nulo"
