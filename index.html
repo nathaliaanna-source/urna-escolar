@@ -268,14 +268,6 @@ window.encerrarEleicao = async function(){
   );
 
 }
-  await setDoc(
-    doc(db,"controle","estado"),
-    {
-      status:"closed"
-    }
-  );
-
-}
 
 function atualizarUrna(){
 
