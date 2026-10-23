@@ -195,7 +195,17 @@ window.cadastrarCandidato = async function(){
     alert("Informe nome e número.");
     return;
   }
+const existente =
+candidatos.find(
+  c => c.numero === numero
+);
 
+if(existente){
+  alert(
+    "Já existe um candidato com esse número."
+  );
+  return;
+}
   await addDoc(
     collection(db,"candidatos"),
     {
