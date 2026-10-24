@@ -756,27 +756,53 @@ const percentualVencedor =
   max * 100 / total
 ).toFixed(1);
 
- html += `
+html += `
 <div style="
 background:#fff3cd;
-border:2px solid #ffc107;
-border-radius:10px;
-padding:20px;
+border:3px solid #ffc107;
+border-radius:12px;
+padding:25px;
 margin-bottom:20px;
 text-align:center;
+color:black;
 ">
 
-<h2>
-🏆 VENCEDOR
+<h1 style="
+margin:0;
+font-size:40px;
+color:#b8860b;
+">
+🏆
+</h1>
+
+<h2 style="
+margin:10px 0;
+color:black;
+">
+VENCEDOR
 </h2>
 
-<h3>
+<h2 style="
+font-size:32px;
+margin:15px 0;
+color:black;
+">
 ${nomeVencedor}
-</h3>
+</h2>
 
-<p>
+<p style="
+font-size:22px;
+font-weight:bold;
+color:black;
+">
 ${max} voto(s)
-(${percentualVencedor}%)
+</p>
+
+<p style="
+font-size:20px;
+color:black;
+">
+${percentualVencedor}%
 </p>
 
 </div>
@@ -784,6 +810,7 @@ ${max} voto(s)
 <h3>RESULTADO FINAL</h3>
 <hr>
 `;
+
 
 for(const k in contagem){
 
