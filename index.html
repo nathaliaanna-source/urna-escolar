@@ -147,7 +147,19 @@ Entrar
 
 <div id="painelMesario" style="display:none;">
 
-<h2>Cadastrar candidato</h2>
+<h2>Cargo da eleição</h2>
+
+<input
+id="cargo"
+placeholder="Ex.: Presidente do Grêmio">
+
+<button onclick="salvarCargo()">
+Salvar Cargo
+</button>
+
+<hr>
+ 
+ <h2>Cadastrar candidato</h2>
 
  <input id="nome" placeholder="Nome">
 
@@ -265,7 +277,8 @@ let numeroDigitado="";
 let votoBranco=false;
 let statusAtual="idle";
 let candidatos=[];
-
+let cargoEleicao = "CANDIDATO";
+ 
  const SENHA_MESARIO = "rener";
 
 window.entrarMesario = function(){
@@ -292,6 +305,18 @@ window.entrarMesario = function(){
 
 }
 
+ window.salvarCargo = function(){
+
+  cargoEleicao =
+  document.getElementById(
+    "cargo"
+  ).value || "CANDIDATO";
+
+  alert(
+    "Cargo atualizado."
+  );
+
+}
 window.abrirAba = function(nome){
 
 document.querySelectorAll(".section")
@@ -457,6 +482,14 @@ color:black;
 SEU VOTO PARA
 </div>
 
+<div style="
+font-size:20px;
+font-weight:bold;
+margin-bottom:20px;
+color:black;
+">
+${cargoEleicao}
+</div>
 
 <div style="
 font-size:70px;
