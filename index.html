@@ -741,8 +741,47 @@ for(const numero in contagem){
 
 }
 
-html += `
-<h3>🏆 RESULTADO FINAL</h3>
+const candidatoVencedor =
+candidatos.find(
+  c => c.numero === vencedor
+);
+
+const nomeVencedor =
+candidatoVencedor
+? candidatoVencedor.nome
+: vencedor;
+
+const percentualVencedor =
+(
+  max * 100 / total
+).toFixed(1);
+
+ html += `
+<div style="
+background:#fff3cd;
+border:2px solid #ffc107;
+border-radius:10px;
+padding:20px;
+margin-bottom:20px;
+text-align:center;
+">
+
+<h2>
+🏆 VENCEDOR
+</h2>
+
+<h3>
+${nomeVencedor}
+</h3>
+
+<p>
+${max} voto(s)
+(${percentualVencedor}%)
+</p>
+
+</div>
+
+<h3>RESULTADO FINAL</h3>
 <hr>
 `;
 
