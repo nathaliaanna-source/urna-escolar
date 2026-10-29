@@ -990,8 +990,9 @@ O resultado será exibido apenas após o encerramento da votação.
 
 }
 
-for(const k in contagem){
+if(statusAtual === "closed"){
 
+for(const k in contagem){
   const candidato =
   candidatos.find(
     c => c.numero === k
@@ -1046,6 +1047,8 @@ Total de votos: ${total}
 </strong>
 `;
 
+ }
+ 
 document.getElementById(
 "resultado"
 ).innerHTML = html;
