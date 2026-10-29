@@ -564,6 +564,10 @@ window.encerrarEleicao = async function(){
       status:"closed"
     }
   );
+const votos =
+await getDocs(
+  collection(db,"votos")
+);
 
 }
 window.novaEleicao = async function(){
