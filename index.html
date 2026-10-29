@@ -558,27 +558,26 @@ window.liberarVoto = async function(){
 
 window.encerrarEleicao = async function(){
 
+  if(
+    !confirm(
+      "Deseja realmente encerrar a eleição?"
+    )
+  ){
+    return;
+  }
+
   await setDoc(
     doc(db,"controle","estado"),
     {
       status:"closed"
     }
   );
-const votos =
-await getDocs(
-  collection(db,"votos")
-);
+
+  alert(
+    "Eleição encerrada."
+  );
 
 }
-window.novaEleicao = async function(){
-
-  if(
-    !confirm(
-      "Apagar todos os votos e iniciar uma nova eleição?"
-    )
-  ){
-    return;
-  }
 
   const votos =
     await getDocs(
