@@ -467,6 +467,31 @@ document.getElementById(nome)
 event.target.classList.add("active");
 }
 
+ window.abrirPainel = function(nome){
+
+  document
+    .querySelectorAll(".subaba")
+    .forEach(
+      el => el.classList.remove("active")
+    );
+
+  document
+    .getElementById(nome)
+    .classList.add("active");
+
+}
+
+window.salvarCargo = function(){
+
+  cargoEleicao =
+  document.getElementById(
+    "cargo"
+  ).value || "CANDIDATO";
+
+  alert("Cargo atualizado.");
+
+}
+ 
 window.cadastrarCandidato = async function(){
 
   const nome =
