@@ -557,7 +557,7 @@ window.liberarVoto = async function(){
 }
 
 window.encerrarEleicao = async function(){
-
+alert("Status enviado: closed");
   await setDoc(
     doc(db,"controle","estado"),
     {
@@ -848,7 +848,7 @@ const dados=snap.data();
 if(!dados) return;
 
 statusAtual=dados.status;
-
+console.log(statusAtual);
 document.getElementById(
 "status"
 ).textContent=
