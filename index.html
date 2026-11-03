@@ -143,8 +143,13 @@ button[onclick="confirma()"]{
 
 .controles{
   display:flex;
-  gap:10px;
+  gap:15px;
   flex-wrap:wrap;
+}
+
+.controles button{
+  min-width:140px;
+  font-weight:bold;
 }
 
 .btn-liberar{
@@ -275,20 +280,6 @@ Entrar
 </div>
 
 <div id="painelMesario" style="display:none;">
-
-<div class="card">
-
-<h2>⚙️ Configuração da Eleição</h2>
-
-<input
-id="cargo"
-placeholder="Ex.: Presidente do Grêmio">
-
-<button onclick="salvarCargo()">
-Salvar Cargo
-</button>
-
-</div>
 
 <div class="card">
 
