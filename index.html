@@ -290,6 +290,48 @@ Salvar Cargo
 
 </div>
 
+<div class="card">
+
+<h2>⚙️ Configuração da Eleição</h2>
+
+<input
+id="cargo"
+placeholder="Ex.: Presidente do Grêmio">
+
+<button onclick="salvarCargo()">
+Salvar Cargo
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🎮 Controle da Eleição</h2>
+
+<div class="controles">
+
+<button
+class="btn-liberar"
+onclick="liberarVoto()">
+Liberar eleitor
+</button>
+
+<button
+class="btn-encerrar"
+onclick="encerrarEleicao()">
+Encerrar eleição
+</button>
+
+<button
+class="btn-nova"
+onclick="novaEleicao()">
+Nova eleição
+</button>
+
+</div>
+
+</div>
+
 <div class="subtabs">
 
 <button onclick="abrirPainel('candidatosPainel')">
@@ -303,6 +345,7 @@ Salvar Cargo
 </div>
 
 <div id="candidatosPainel" class="subaba active">
+
 
 <div class="card">
 
@@ -338,27 +381,6 @@ Adicionar
 
 <h2>🎮 Controle da Eleição</h2>
 
-<div class="controles">
-
-<button
-class="btn-liberar"
-onclick="liberarVoto()">
-Liberar eleitor
-</button>
-
-<button
-class="btn-encerrar"
-onclick="encerrarEleicao()">
-Encerrar eleição
-</button>
-
-<button
-class="btn-nova"
-onclick="novaEleicao()">
-Nova eleição
-</button>
-
-</div>
 
 </div>
 
