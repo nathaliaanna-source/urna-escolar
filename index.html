@@ -843,35 +843,10 @@ doc(db,"controle","estado"),
 snap=>{
 
 const dados=snap.data();
-
+ 
 if(!dados) return;
 
 statusAtual=dados.status;
-getDocs(
-  collection(db,"votos")
-).then(snapshot=>{
-
-  const contagem={};
-
-  snapshot.forEach(doc=>{
-
-    const voto=
-    doc.data().numero;
-
-    contagem[voto]=
-    (contagem[voto]||0)+1;
-
-  });
-
-  // força atualização da área de resultado
-  document.getElementById(
-    "resultado"
-  ).innerHTML =
-  document.getElementById(
-    "resultado"
-  ).innerHTML;
-
-});
  console.log(statusAtual);
 document.getElementById(
 "status"
