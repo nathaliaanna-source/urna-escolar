@@ -488,12 +488,7 @@ window.entrarMesario = function(){
 }
 window.abrirAba = function(nome){
 
-  if(
-    nome === "mesario" &&
-    document.getElementById(
-      "painelMesario"
-    ).style.display !== "block"
-  ){
+  if(nome === "mesario"){
 
     const senha = prompt(
       "Digite a senha do mesário:"
@@ -508,13 +503,6 @@ window.abrirAba = function(nome){
       return;
     }
 
-    document.getElementById(
-      "loginMesario"
-    ).style.display = "none";
-
-    document.getElementById(
-      "painelMesario"
-    ).style.display = "block";
   }
 
   document.querySelectorAll(".section")
