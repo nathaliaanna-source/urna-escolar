@@ -579,7 +579,16 @@ window.encerrarEleicao = async function(){
 
 }
 
-  const votos =
+window.novaEleicao = async function(){
+
+  if(
+    !confirm(
+      "Apagar todos os votos e iniciar uma nova eleição?"
+    )
+  ){
+    return;
+  }
+ const votos =
     await getDocs(
       collection(db,"votos")
     );
