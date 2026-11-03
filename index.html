@@ -214,12 +214,41 @@ button[onclick="confirma()"]{
   display:block;
 }
  
+#dashboard{
+  background:white;
+  border-left:6px solid #1976d2;
+}
+
+#dashboard p{
+  font-size:18px;
+  margin:8px 0;
+}
 </style>
 </head>
 <body>
 
 <h1>Urna Escolar</h1>
+<div id="dashboard" class="card">
 
+<h2>📊 Painel da Eleição</h2>
+
+<p id="dashCargo">
+Cargo: -
+</p>
+
+<p id="dashCandidatos">
+Candidatos: 0
+</p>
+
+<p id="dashVotos">
+Votos: 0
+</p>
+
+<p id="dashStatus">
+Status: Aguardando liberação
+</p>
+
+</div>
 <button class="tab active" onclick="abrirAba('mesario')">
 Mesário
 </button>
@@ -487,7 +516,10 @@ window.salvarCargo = function(){
   document.getElementById(
     "cargo"
   ).value || "CANDIDATO";
-
+document.getElementById(
+  "dashCargo"
+).textContent =
+"Cargo: " + cargoEleicao;
   alert("Cargo atualizado.");
 
 }
@@ -819,12 +851,13 @@ div.innerHTML="";
 
 snapshot.forEach(docSnap=>{
 
-const c=docSnap.data();
+const c=doc.data();
 
 candidatos.push(c);
 
 div.innerHTML += `
 <div>
+
 <img
 src="${c.foto}"
 style="
@@ -836,17 +869,24 @@ vertical-align:middle;
 ">
 
 ${c.numero} - ${c.nome}
+
 <button onclick="excluirCandidato('${docSnap.id}')">
-    Excluir
-  </button>
+Excluir
+</button>
+
 </div>
 `;
 
 });
 
+document.getElementById(
+  "dashCandidatos"
+).textContent =
+"Candidatos: " +
+candidatos.length;
+
 }
 );
-
 onSnapshot(
 doc(db,"controle","estado"),
 snap=>{
@@ -865,7 +905,17 @@ statusAtual==="ready"
 : statusAtual==="closed"
 ? "Eleição encerrada"
 : "Aguardando liberação";
-
+document.getElementById(
+  "dashStatus"
+).textContent =
+"Status: " +
+(
+  statusAtual==="ready"
+  ? "Votação aberta"
+  : statusAtual==="closed"
+  ? "Encerrada"
+  : "Aguardando liberação"
+);
 }
 );
 
@@ -890,7 +940,10 @@ let html="";
 const total =
 Object.values(contagem)
 .reduce((a,b)=>a+b,0);
-
+document.getElementById(
+  "dashVotos"
+).textContent =
+"Votos: " + total;
 let vencedor = "";
 let max = 0;
 
