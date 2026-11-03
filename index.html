@@ -936,8 +936,6 @@ total > 0
   ).toFixed(1)
 : "0.0";
 
-if(statusAtual === "closed"){
- 
  html += `
 
 <div style="
@@ -993,34 +991,6 @@ ${percentualVencedor}%
 <h3>RESULTADO FINAL</h3>
 <hr>
 `;
-} else {
-
-html += `
-<div style="
-text-align:center;
-padding:30px;
-background:white;
-border-radius:12px;
-color:black;
-">
-
-<h2 style="
-color:#1976d2;
-">
-Eleição em andamento
-</h2>
-
-<p>
-O resultado será divulgado após o encerramento oficial da votação.
-</p>
-
-</div>
-`;
-
-
-}
-
-if(statusAtual === "closed"){
 
 for(const k in contagem){
   const candidato =
@@ -1077,7 +1047,6 @@ Total de votos: ${total}
 </strong>
 `;
 
- }
  
 console.log(html);
  
