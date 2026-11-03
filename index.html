@@ -498,6 +498,18 @@ event.target.classList.add("active");
 
  window.abrirPainel = function(nome){
 
+  if(
+    nome === "resultadoPainel" &&
+    statusAtual !== "closed"
+  ){
+
+    alert(
+      "O resultado só pode ser visualizado após o encerramento da eleição."
+    );
+
+    return;
+  }
+
   document
     .querySelectorAll(".subaba")
     .forEach(
