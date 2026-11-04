@@ -254,16 +254,15 @@ Status: Aguardando liberação
 </p>
 
 </div>
-<button class="tab active" onclick="abrirAba('mesario')">
+<button class="tab" onclick="abrirAba('mesario')">
 Mesário
 </button>
 
-<button class="tab" onclick="abrirAba('urna')">
+<button class="tab active" onclick="abrirAba('urna')">
 Urna
 </button>
 
-<div id="mesario" class="section active">
-
+<div id="mesario" class="section">
 <div id="painelMesario" style="display:block;">
  <div class="card">
 
@@ -369,8 +368,7 @@ Adicionar
 
 </div>
 
-<div id="urna" class="section">
-
+<div id="urna" class="section active">
 <div id="urnaContainer">
 
   <div id="tela">
@@ -493,10 +491,6 @@ window.abrirAba = function(nome){
       "Digite a senha do mesário:"
     );
 
-  alert(
-  "Digitada: " + senha +
-  " | Esperada: " + SENHA_MESARIO
-);
    if(
       senha !== SENHA_MESARIO
     ){
